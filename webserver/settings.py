@@ -75,13 +75,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'webserver.wsgi.application'
 
-SOC_DB_HOST = os.environ.get('SOC_DB_HOST', 'localhost')
+DATABASE_URL = os.environ.get('DATABASE_URL', 'postgresql://postgres:zUMQnoRAMDFhfUwEwHurDoeQUAxFyDNJ@postgres.railway.internal:5432/railway')
 
-# Database settings
+# Use dj_database_url to configure the database connection
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL', f'postgres://username:password@{SOC_DB_HOST}:5432/mydb')
-    )
+    'default': dj_database_url.config(default=DATABASE_URL)
 }
 
 AUTH_PASSWORD_VALIDATORS = [
