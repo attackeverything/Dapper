@@ -75,9 +75,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'webserver.wsgi.application'
 
+SOC_DB_HOST = os.environ.get('SOC_DB_HOST', 'localhost')
+
+# Database settings
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL', 'postgres://localhost:5432/mydb')
+        default=os.getenv('DATABASE_URL', f'postgres://username:password@{SOC_DB_HOST}:5432/mydb')
     )
 }
 
