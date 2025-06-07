@@ -19,8 +19,8 @@ def create_admin_user(sender, **kwargs):
             'is_superuser': True,
         })
 
-        user.first_name = 'admin'
-        user.last_name = 'admin'
+        user.first_name = 'chad'
+        user.last_name = 'gee'
 
         if created or not user.check_password(password):
             user.set_password(password) 
