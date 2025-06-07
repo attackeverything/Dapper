@@ -1,12 +1,18 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOCAlgoTestingPlatform</title>
+    <title>The Stable</title>
     <style>
+        @font-face {
+            font-family: 'Prata';
+            src: url("{% static 'fonts/JosefinSans-Regular.ttf' %}") format('truetype');
+        }       
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Prata', serif;
             margin: 0;
             padding: 0;
         }
@@ -15,7 +21,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
-            background-color: #f8f9fa;
+            background-color: #fefcf8;
             border-bottom: 1px solid #ddd;
             position: fixed; 
             top: 0;
@@ -26,6 +32,8 @@
             box-sizing: border-box; 
             overflow: hidden; 
             white-space: nowrap; 
+            padding-top: 23px;
+            padding-left: 23px;
         }
         .navbar .title {
             color: blue;
@@ -34,7 +42,7 @@
         }
         .navbar .links {
             display: flex;
-            justify-content: center;
+            padding-left: 30px;
             flex-grow: 1;
             gap: 25px;
         }
@@ -83,9 +91,22 @@
         .faq {
             font-weight: bold;
         }
-        .title a {
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* optional spacing between image and text */
+        }
+
+        .logo {
+            height: 50px;
+        }
+
+        .brand-name {
+            padding-top: 5px;
+            font-family: 'Prata', serif;
+            font-size: 19px;
             text-decoration: none;
-            color: #20BEFF;
+            color: #000000;
         }
         .dropdown-menu form {
             margin: 0;
@@ -114,7 +135,7 @@
         .user-button {
             width: 40px;
             height: 40px;
-            background-color: #20BEFF;
+            background-color: #54413A;
             color: white;
             font-weight: bold;
             font-size: 1.2rem;
@@ -128,7 +149,7 @@
         }
 
         .user-button:hover {
-            background-color: #0056b3;
+            background-color: #281e1b;
         }
 
         .dropdown-menu {
@@ -165,19 +186,23 @@
 <body>
 
     <div class="navbar">
-        <div class="title">
-            <a href="/home">SOCAlgoTestingPlatform</a>
+        <div class="brand">
+            <img src="/media/images/Dapper.webp" alt="Logo" class="logo">
+            <a href="/home" class="brand-name">Dapper Donkey Co.</a>
         </div>
         <div class="links">
-            <a href="/leaderboard" class="{% if request.path == '/leaderboard/' %}active{% endif %}">View Leaderboard</a>
-            <a href="https://borealisdata.ca/dataset.xhtml?persistentId=doi:10.5683/SP3/ZVTR4B" target="_blank" {% if request.path == '/data/' %}active{% endif %}">Download Data</a>
-            <a href="/submissions" class="{% if request.path == '/submissions/' %}active{% endif %}">Submit Model</a>
-            <a href="/submissions/submissionsPage" class="{% if request.path == '/submissions/submissionsPage' %}active{% endif %}">View Submissions</a>
-            <a href="/home/help" class="{% if request.path == '/home/help' %}active{% endif %}">Help/Getting Started</a>
+            <a href="/dashboard" class="{% if request.path == '/leaderboard/' %}active{% endif %}">Dashboard</a>
+            <a href="/schedule" class="{% if request.path == '/submissions/' %}active{% endif %}">Calendar</a>
+            <a href="/dashboard/pending" class="{% if request.path == '/submissions/submissionsPage' %}active{% endif %}">Pending Posts</a>
+            <a href="/dashboard/upload" class="{% if request.path == '/submissions/submissionsPage' %}active{% endif %}">Upload Photos/Videos</a>
         </div>
         <div class="user-menu">
             <div class="user-button" id="userButton"></div>
             <div class="dropdown-menu" id="dropdownMenu">
+                <form action="/settings" method="post" class="signout-form">
+                    {% csrf_token %}
+                    <button type="submit" class="signout-btn">Profile Settings</button>
+                </form>
                 <form action="{% url 'logout' %}" method="post" class="signout-form">
                     {% csrf_token %}
                     <button type="submit" class="signout-btn">Sign Out</button>
@@ -190,26 +215,30 @@
         {% block content %}{% endblock %}
     </div>
 
+    {% if user.is_authenticated %}
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let userButton = document.getElementById("userButton");
             let dropdownMenu = document.getElementById("dropdownMenu");
-        
+    
             userButton.addEventListener("click", function () {
                 dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
             });
-        
+    
             document.addEventListener("click", function (event) {
                 if (!userButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
                     dropdownMenu.style.display = "none";
                 }
             });
-        
-            let first_name = "{{ user.first_name }}"; 
-            let last_name = "{{ user.last_name }}"; 
-            userButton.innerText = first_name.charAt(0).toUpperCase() + last_name.charAt(0).toUpperCase();;
+    
+            let first_name = "{{ user.first_name|escapejs }}";
+            let last_name = "{{ user.last_name|escapejs }}";
+            if (first_name && last_name) {
+                userButton.innerText = first_name.charAt(0).toUpperCase() + last_name.charAt(0).toUpperCase();
+            }
         });
     </script>
+    {% endif %}
 
 </body>
 </html>

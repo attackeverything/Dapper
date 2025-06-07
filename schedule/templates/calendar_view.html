@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Calendar</title>
+
+    {% extends "Webpage_Base.html" %}
+
+    {% block title %}Upload Post{% endblock %}
+    
+    {% block content %}
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fefcf8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* Makes all columns equal width */
+        }
+
+        td {
+            width: 14.28%;       /* 100% ÷ 7 days of the week */
+            height: 120px;        /* Set fixed height for consistency */
+            border: 1px solid #ccc;
+            vertical-align: top;
+            padding: 5px;
+            overflow-wrap: break-word;
+        }
+
+        th {
+            background-color: #54413A;
+            padding: 10px;
+            border: 1px solid #e5e7eb;
+            text-align: center;
+            color: white;
+        }
+
+        td:hover {
+            background-color: #fefcf8;
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 0.9rem;
+            color: #374151;
+        }
+
+        .today {
+            background-color: #cec0bc;
+            border: 2px solid #54413A;
+            font-weight: bold;
+            color: #000;
+        }
+
+        form {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .month-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .month-nav {
+            color: #FF6347; /* Change this to any color you like */
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 28px;
+            transition: color 0.3s;
+        }
+
+        .month-nav:hover {
+            color: #D32F2F; /* Darker shade on hover */
+        }
+
+        td {
+            position: relative;
+            vertical-align: top;
+            padding: 6px;
+            height: 100px;
+            width: 14.28%;
+            background-color: #f9f9f9;
+        }
+
+        .day-number {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .event-box {
+            display: block;
+            background-color: #54413A;
+            color: white;
+            border-radius: 8px;
+            padding: 4px 6px;
+            margin: 2px auto;
+            font-size: 0.85rem;
+            width: 80%;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+            .event-box:hover {
+            background-color: #221915;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Event Calendar - {{ month }}/{{ year }}</h1>
+    <div>{{ calendar|safe }}</div>
+</body>
+</html>
+{% endblock %}

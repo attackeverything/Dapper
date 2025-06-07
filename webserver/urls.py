@@ -21,12 +21,11 @@ from django.conf.urls.static import static
 from django.shortcuts import redirect
 
 urlpatterns = [
-    path('', lambda req: redirect('/home')),
-    path('home/', include('home.urls')),
+    path('', lambda req: redirect('/dashboard')),
+    path('dashboard/', include('home.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path("submissions/", include("submissions.urls")),
+    path("schedule/", include("schedule.urls")),
     path("authentication/", include("authentication.urls")),
-    path("leaderboard/", include("leaderboard.urls")),
     path('admin/', admin.site.urls),
     path('verification/', include('verify_email.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

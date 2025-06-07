@@ -12,6 +12,16 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import environ
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+ADMIN_USERNAME = env('DJANGO_ADMIN_USERNAME')
+ADMIN_PASSWORD = env('DJANGO_ADMIN_PASSWORD')
+ADMIN_EMAIL = env('DJANGO_ADMIN_EMAIL', default='admin@example.com')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,8 +42,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'submissions.apps.SubmissionsConfig',
-    'leaderboard.apps.LeaderboardConfig',
+    'schedule.apps.ScheduleConfig',
     'authentication.apps.AuthenticationConfig',
     'home.apps.HomeConfig',
     'django.contrib.admin',
@@ -59,7 +68,9 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'webserver.urls'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/home/'
+LOGIN_REDIRECT_URL = '/dashboard/'
+
+LOGOUT_REDIRECT_URL = '/dashboard/'
 
 SITE_DOMAIN = '127.0.0.1:8000'
 
@@ -149,6 +160,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

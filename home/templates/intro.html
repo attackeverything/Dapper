@@ -1,275 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Intro</title>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        background-color: #f4f7fc;
-        color: #333;
-      }
+<head>
+  <meta charset="UTF-8">
+  <title>The Stable Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-      }
+    .centered-content {
+      width: 100%;
+      max-width: 400px; /* Or whatever fits your design */
+      text-align: center;
+    }
 
-      .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-        color: white;
-      }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
 
-      .header h1 {
-        margin: 0;
-        font-size: 2rem;
-        color: white;
-      }
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
 
-      .intro-section {
-        display: flex;
-        align-items: center;
-        gap: 30px;
-        padding: 60px 20px;
-        background: #ffffff;
-        color: black;
-        flex-wrap: wrap;
-        border-radius: 10px;
-      }
+    .left-half {
+      background-color: #fefcf8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50%; 
+      height: 100%;
+    }
 
-      .intro-text {
-        flex: 1;
-        text-align: left;
-      }
+    .right-half {
+      background-color: #54413A;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      text-align: center;
+      width: 50%; 
+      height: 100%;
+    }
 
-      .intro-text h2 {
-        font-size: 2.5rem;
-        font-weight: bold;
-        margin-bottom: 10px;
-        text-align: center;
-      }
+    .login-card {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
 
-      .intro-text p {
-        font-size: 1.2rem;
-        line-height: 1.5;
-        text-align: center;
-      }
+    .login-card img {
+      height: 60px;
+      margin-bottom: 20px;
+    }
 
-      .intro-image img {
-        max-width: 550px;
-        height: auto;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      }
+    .login-card h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #000;
+    }
 
-      .info-section {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 60px 20px;
-        background-color: #ffffff; 
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin-top: 40px;
-        max-width: 1200px;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 40px;
-      }
+    .login-card p {
+      margin: 4px 0 16px;
+      color: #555;
+    }
 
-      .info-header h2 {
-        font-size: 2.5rem;
-        font-weight: bold;
-        text-align: center;
-        width: 100%;
-        color: black;
-      }
+    .login-card p1 {
+      color: #555;
+      margin-bottom: 20px;
+    }
 
-      .info-content {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        gap: 30px;
-        flex-wrap: wrap;
-      }
+    .login-card input[type="text"],
+    .login-card input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
 
-      .intro-text-small {
-        flex: 1;
-        padding: 20px;
-        background-color: #e9f5ff;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-      }
+    .login-card button {
+      background-color: #54413A;
+      color: white;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
 
-      .info-text-left,
-      .info-text-right {
-        flex: 1;
-        padding: 20px;
-        background-color: #e9f5ff;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
+    .login-card button:hover {
+      background-color: #3d302b;
+    }
 
-      .info-text-left p,
-      .info-text-right p {
-        font-size: 1.2rem;
-        line-height: 1.6;
-        text-align: left;
-      }
+    .login-card .footer-text {
+      margin-top: 16px;
+      font-size: 0.9em;
+      color: #777;
+    }
 
-      .flowchart-image {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        padding: 20px;
-      }
+    .login-card img {
+      height: 80px; /* increase or decrease as needed */
+      width: auto;  /* keeps aspect ratio */
+      margin-bottom: 20px;
+    }
 
-      .flowchart-image img {
-        max-width: 900px;
-        height: auto;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      }
+    .features {
+      max-width: 500px;
+    }
 
-      .tour-section {
-        display: flex;
-        align-items: center;
-        background-color: #e9f5ff;
-        padding: 40px;
-        border-radius: 8px;
-        margin-top: 40px;
-        gap: 20px;
-        flex-wrap: wrap;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
+    .features img {
+      height: 120px;
+    }
 
-      .video-placeholder {
-        width: 100%;
-        max-width: 600px;
-        height: 300px;
-        background: #ddd;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 8px;
-        font-size: 1.2rem;
-      }
+    .features h1 {
+      font-size: 40px;
+      margin-bottom: 0;
+      margin-top: 10px;
+    }
 
-      .tour-text {
-        flex: 1;
-        text-align: center;
-      }
+    .features p.subtitle {
+      margin-top: 4px;
+      font-weight: 300;
+    }
 
-      .tour-text h2 {
-        font-size: 2.5rem;
-        font-weight: bold;
-        margin-bottom: 10px;
-        color: black;
-      }
+    .features .feature {
+      display: flex;
+      align-items: flex-start;
+      text-align: left;
+      margin-top: 20px;
+    }
 
-      .tour-text p {
-        font-size: 1.2rem;
-        line-height: 1.5;
-      }
-      .hero {
-        text-align: center;
-        padding: 80px 20px;
-        background: linear-gradient(to right, #e9f5ff, #ffffff);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 40px;
-        border-radius: 8px;
-        margin-bottom: 40px;
-        gap: 20px;
-        flex-wrap: wrap;
-      }
+    .features .feature-icon {
+      font-size: 30px;
+      margin-right: 10px;
+    }
 
-      .hero h2 {
-        font-size: 2.8rem;
-        font-weight: bold;
-        margin-bottom: 10px;
-      }
+    .features .feature-text {
+      line-height: 1.4;
+    }
 
-      .hero p {
-        font-size: 1.2rem;
-        margin-bottom: 20px;
-      }
-
-      .hero .search-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-      }
- 
-   </style>
-{% extends "Intro_Base.html" %}
-
-{% block title %}Homepage{% endblock %}
-
-{% block content %}
-    <div class="container">
-      <div class="hero">
-        <h2>SOC Estimator Testing Tool</h2>
-        <p>Repository for easy visualization, analysis, and comparison of battery state of charge algorithms across institutions.</p>
-      </div>
-
-        
-        <div class="intro-section">
-            <div class="intro-text">
-              <h2>Get Started With The SOC Estimator Testing Tool Today</h2>
-                <div class="intro-text-small">
-                  <P>Register an account today to gain access to our leaderboard, submit your own algorithms and recieve detailed
-                    feedback including graphs, and see how you rank against the best at other instituions.
-                  </P>
-                </div>
-            </div>
-            <div class="intro-image">
-                <img src="/media/images/Battery_Home.png" alt="Battery Graphic">
-            </div>
-      </div>
+    .features .feature-text strong {
+      display: block;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left-half">
+      <div class="login-card centered-content">
+        <img src="/media/images/dapper-donkey.png" alt="Logo">
+        <h1>The Stable</h1>
+        <p><strong>by Dapper Donkey Co.</strong></p>
+        <p>Social Media Approval Platform</p>
+        <h2 style="font-size: 18px; margin-top: 20px; margin-bottom: 0px;">Login to Your Account</h2>
+        <p>Please sign in to access the platform</p>
       
-      <div class="tour-section">
-        <video width="600" height="360" controls>
-          <source src="/media/images/Walkthrough.mp4" type="video/mp4">
-        </video>
-        <div class="tour-text">
-          <h2>Take a Tour of our Platform!</h2>
-          <p>
-            Want to learn how to submit your MATLAB and python models, compete
-            on the leaderboard, and analyze your results? Our step-by-step
-            walkthrough video shows you how it all works!
-          </p>
+        <form method="post" action="{% url 'login' %}">
+          {% csrf_token %}
+          {% if form.errors %}
+            <p style="color: red;">Invalid login. Please try again.</p>
+          {% endif %}
+      
+          <div>
+            <label for="id_username" style="display: block; text-align: left; margin-bottom: 4px;">Username</label>
+            <input type="text" name="username" id="id_username" placeholder="Enter your username" required>
+          </div>
+      
+          <div>
+            <label for="id_password" style="display: block; text-align: left; margin-bottom: 4px;">Password</label>
+            <input type="password" name="password" id="id_password" placeholder="Enter your password" required>
+          </div>
+      
+          <button type="submit">Login</button>
+        </form>
+      
+        <p class="footer-text">Don't have an account? Please contact your agency administrator.</p>
+      </div>
+    </div>
+    <div class="right-half">
+      <div class="features centered-content">
+        <img src="/media/images/dapper-donkey.png" alt="Logo">
+        <h1>The Stable</h1>
+        <p class="subtitle">by Dapper Donkey Co.</p>
+        <p>A streamlined platform for agencies and clients to collaborate on social media content.</p>
+
+        <div class="feature">
+          <div class="feature-icon">🗹</div>
+          <div class="feature-text">
+            <strong>Efficient Approvals</strong>
+            Streamline your content approval workflow
           </div>
         </div>
 
-      <div class="info-section">
-        <div class="info-header">
-            <h2>What Is The Battery State of Charge (SOC) Estimator Standardized Testing Tool?</h2>
+        <div class="feature">
+          <div class="feature-icon">🗹</div>
+          <div class="feature-text">
+            <strong>Visual Previews</strong>
+            See exactly how posts will look before they go live
+          </div>
         </div>
-        <div class="info-content">
-            <div class="info-text-left">
-                <p>There are hundreds of approaches to estimating battery state of charge (SOC), some better suited for 
-                    specific applications, which makes it very hard to fairly compare results reported in different papers. 
-                    SOC estimation techniques such as coulomb counting or OCV vs. SOC relationships can be subject to nuances 
-                    in data and conditions that skew results. Some of these issues include sensor errors, initial value errors, 
-                    or other complex factors affecting battery performance (e.g., cold weather, cell internal resistance).</p>
-            </div>
-            <div class="info-text-right">
-                <p>This standardized model testing tool is an effective method developed to enable a fair comparison of SOC 
-                    estimators from various sources and authors, eliminating bias as a result of human and/or external factors 
-                    by testing models over a wide range of conditions on data which is blinded from the user. The submission 
-                    process is detailed in the Help/FAQ section and submission can be performed through this platform making it 
-                    convenient for students or researchers to access the standardized model testing tool. </p>
-            </div>
+
+        <div class="feature">
+          <div class="feature-icon">🗹</div>
+          <div class="feature-text">
+            <strong>Real-time Updates</strong>
+            Instant notifications for an efficient workflow
+          </div>
         </div>
-        <div class="flowchart-image">
-            <img src="/media/images/BlindModeling-Flowchart.jpg" alt="Flowchart Graphic">
-        </div>
+      </div>
     </div>
-{% endblock %}
+  </div>
+</body>
+</html>
