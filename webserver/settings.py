@@ -20,7 +20,7 @@ DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
     os.getenv('RAILWAY_PUBLIC_DOMAIN', 'your-app-name.up.railway.app'),
-    'dapper-production.up.railway.app',
+    'the-stable.up.railway.app',
     'localhost',
     '127.0.0.1',
 ]
