@@ -7,6 +7,9 @@ from django.utils.dateparse import parse_datetime
 from django.utils.timezone import make_aware
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
+import os
+from django.conf import settings
+from django.core.files import File
 
 User = get_user_model()
 
@@ -21,7 +24,7 @@ def home(request: HttpRequest):
 def upload(request):
     if request.method == 'POST':
         platform = request.POST.get('platform')
-        ##image = request.FILES.get('image')
+        #image = request.FILES.get('image')
         caption = request.POST.get('caption')
         raw_time = request.POST.get('scheduled_time')
 
@@ -32,9 +35,9 @@ def upload(request):
         else:
             scheduled_time = timezone.now()
 
-        image_path = os.path.join(settings.MEDIA_ROOT, 'static/images/dapper-donkey.png')
+        image_path = os.path.join(settings.BASE_DIR, 'static', 'images', 'dapper-donkey.png')
         with open(image_path, 'rb') as f:
-            django_file = File(f)
+            django_file = File(f, name='dapper-donkey.png')
             Post.objects.create(
                 image=django_file,
                 content=caption,
@@ -42,16 +45,7 @@ def upload(request):
                 status='pending',
                 platform=platform
             )
-
-        if image and caption and scheduled_time:
-            Post.objects.create(
-                image=image,
-                content=caption,
-                scheduled_time=scheduled_time,
-                status='pending',
-                platform=platform
-            )
-            return redirect('/submittied')
+            return redirect('/submitted')
     return render(request, 'upload.html')
     
 def pending(request: HttpRequest):
