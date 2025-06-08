@@ -1,19 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Event Calendar</title>
-
-    {% extends "Webpage_Base.html" %}
+{% extends "Webpage_Base.html" %}
 
     {% block title %}Upload Post{% endblock %}
     
     {% block content %}
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        .calendar {
             background-color: #fefcf8;
             margin: 0;
-            padding: 20px;
+            padding: 40px;
         }
 
         h1 {
@@ -168,14 +162,13 @@
         }
 
     </style>
-</head>
-<body>
+<div class="calendar">
     <h1>Event Calendar - {{ month }}/{{ year }}</h1>
     <div class="calendar-switcher" style="text-align: center; margin-bottom: 20px;">
         <a href="{% url 'calendar_view' %}" class="view-btn {% if request.resolver_match.url_name == 'calendar_view' %}active{% endif %}">Month</a>
         <a href="{% url 'weekly_calendar' %}" class="view-btn {% if request.resolver_match.url_name == 'weekly_calendar' %}active{% endif %}">Week</a>
     </div>
     <div>{{ calendar|safe }}</div>
-</body>
-</html>
+</div>
+    
 {% endblock %}

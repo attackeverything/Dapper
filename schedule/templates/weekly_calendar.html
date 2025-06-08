@@ -4,8 +4,7 @@
 
 {% block content %}
 <style>
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    .calendar {
         background-color: #fefcf8;
         margin: 0;
         padding: 20px;
@@ -166,6 +165,8 @@
 
 </style>
 
+<div class="calendar">
+
 <h1>Event Calendar - {{ month_name }} {{ year }}</h1>
 
 <div class="calendar-switcher" style="text-align: center; margin-bottom: 20px;">
@@ -204,5 +205,6 @@
             {% endfor %}
         </div>
     {% endfor %}
+</div>
 </div>
 {% endblock %}
