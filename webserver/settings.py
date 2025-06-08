@@ -142,4 +142,4 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 TIME_ZONE = 'America/Toronto'
 
-DEBUG=True
+USE_TZ = True 
