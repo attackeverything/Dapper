@@ -40,7 +40,7 @@ def upload(request):
 
         image_path = os.path.join(settings.BASE_DIR, 'static', 'images', 'dapper-donkey.png')
         with open(image_path, 'rb') as f:
-            django_file = File(f)
+            django_file = File(f, name='dapper-donkey.png')
             Post.objects.create(
                 title=title,
                 image=django_file,
