@@ -58,7 +58,7 @@
 
         .today {
             background-color: #cec0bc;
-            border: 2px solid #54413A;
+            border: 1px solid white;
             font-weight: bold;
             color: #000;
         }
@@ -123,14 +123,58 @@
             text-align: center;
         }
 
-            .event-box:hover {
+        .event-box:hover {
             background-color: #221915;
+        }
+
+        .view-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 0 8px;
+            background-color: #54413A;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .view-btn:hover {
+            background-color: #221915;
+        }
+
+        .calendar-switcher {
+            display: flex;
+            justify-content: center;
+        }
+
+        .view-btn {
+            display: inline-block;
+            background-color: white;
+            color: #54413A;
+            text-decoration: none;
+            border: 2px solid #54413A;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .view-btn:hover {
+            background-color: #f5f0ed;
+        }
+
+        .view-btn.active {
+            background-color: #54413A;
+            color: white;
         }
 
     </style>
 </head>
 <body>
     <h1>Event Calendar - {{ month }}/{{ year }}</h1>
+    <div class="calendar-switcher" style="text-align: center; margin-bottom: 20px;">
+        <a href="{% url 'calendar_view' %}" class="view-btn {% if request.resolver_match.url_name == 'calendar_view' %}active{% endif %}">Month</a>
+        <a href="{% url 'weekly_calendar' %}" class="view-btn {% if request.resolver_match.url_name == 'weekly_calendar' %}active{% endif %}">Week</a>
+    </div>
     <div>{{ calendar|safe }}</div>
 </body>
 </html>

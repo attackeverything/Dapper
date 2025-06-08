@@ -16,6 +16,7 @@ from .forms import EventForm
 from datetime import datetime
 from home.models import Post
 from django.urls import reverse
+from datetime import timedelta
 
 Users = get_user_model()
     
@@ -42,9 +43,23 @@ class NavigationCalendar(HTMLCalendar):
         )
         return cal_html
     
+    def formatweekheader(self):
+        return '<tr>' + ''.join(f'<th>{day}</th>' for day in calendar.day_name) + '</tr>'
+    
+    def formatweek(self, theweek):
+        return '<tr>' + ''.join(self.formatday(d, wd) for (d, wd) in theweek) + '</tr>'
+    
     def formatmonth(self, year, month, withyear=True):
         self.year, self.month = year, month
-        return super().formatmonth(year, month, withyear)
+        weeks = self.monthdays2calendar(year, month)  # ← ADD THIS LINE
+
+        return (
+            f'<table border="0" cellpadding="0" cellspacing="0" class="month">\n'
+            f'{self.formatmonthname(year, month, withyear=withyear)}\n'
+            f'{self.formatweekheader()}\n'
+            + '\n'.join(self.formatweek(week) for week in weeks) +
+            '\n</table>'
+        )
 
     def formatday(self, day, weekday):
         if day != 0:
@@ -113,6 +128,37 @@ def calendar_view(request):
 
     return render(request, 'calendar_view.html', {
         'calendar': html_calendar,
+    })
+
+
+def weekly_calendar_view(request):
+    today = date.today()
+    year = int(request.GET.get('year', today.year))
+    month = int(request.GET.get('month', today.month))
+    day = int(request.GET.get('day', today.day))
+
+    selected_date = date(year, month, day)
+    start_of_week = selected_date - timedelta(days=selected_date.weekday() + 1 if selected_date.weekday() != 6 else 0)
+    week_dates = [start_of_week + timedelta(days=i) for i in range(7)]
+
+    posts = Post.objects.filter(scheduled_time__date__in=week_dates)
+
+    # Create a list of (day, posts) tuples
+    week_data = []
+    for d in week_dates:
+        day_posts = posts.filter(scheduled_time__date=d)
+        week_data.append((d, day_posts))
+
+    prev_week = start_of_week - timedelta(days=7)
+    next_week = start_of_week + timedelta(days=7)
+    prev_url = f"?year={prev_week.year}&month={prev_week.month}&day={prev_week.day}"
+    next_url = f"?year={next_week.year}&month={next_week.month}&day={next_week.day}"
+
+    return render(request, "weekly_calendar.html", {
+        "week_data": week_data,   # List of (date, posts)
+        "today": today,
+        "prev_url": prev_url,
+        "next_url": next_url,
     })
 
 def post_detail(request, pk):

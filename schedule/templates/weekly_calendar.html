@@ -1,0 +1,208 @@
+{% extends "Webpage_Base.html" %}
+
+{% block title %}Weekly Calendar{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fefcf8;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: white;
+    }
+
+    th {
+        background-color: #54413A;
+        padding: 10px;
+        border: 1px solid #e5e7eb;
+        text-align: center;
+        color: white;
+    }
+
+    .calendar-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 1px;
+    }
+
+    .day-column.today {
+        border: 1px solid white !important;
+        background-color: #cec0bc;
+    }
+
+    .today:hover {
+        background-color: #dbd2cf; /* Slightly different from default to show hover */
+        cursor: pointer;
+    }
+
+    .event-box {
+        display: block;
+        background-color: #54413A;
+        color: white;
+        border-radius: 8px;
+        padding: 4px 6px;
+        margin: 2px auto;
+        font-size: 0.85rem;
+        width: 90%;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        text-align: center;
+    }
+
+    .event-box:hover {
+        background-color: #221915;
+    }
+
+    .month-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        gap: 20px;
+        background-color: #54413A; /* brown background */
+        color: white;              /* white text */
+        padding: 10px 0;
+        font-weight: bold;
+    }
+
+    .month-nav {
+        color: white; /* white arrows */
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 28px;
+        transition: color 0.3s;
+    }
+
+    .month-nav:hover {
+        color: #D32F2F; /* optional red hover */
+    }
+
+    .view-btn {
+        display: inline-block;
+        padding: 8px 16px;
+        margin: 0 8px;
+        background-color: #54413A;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .view-btn:hover {
+        background-color: #221915;
+    }
+
+    .day-column {
+        display: flex;
+        flex-direction: column;
+        width: 100%; /* or a fixed % if you're using grid */
+        border: 1px solid #ccc;
+        overflow: hidden;
+    }
+
+    .day-column {
+        flex: 1;
+        min-width: 0; /* helps avoid overflow */
+        height: 200px;
+    }
+
+    .day-header {
+        font-size: 1.1rem;
+        text-align: center;
+        padding: 8px 0;
+        color: white;
+        background-color: #54413A;
+        width: 100%;
+        box-sizing: border-box;
+        border-bottom: 1px solid #ccc;
+        font-weight: bold;
+    }
+
+    .day-number {
+        text-align: left;
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-bottom: 6px;
+        margin-left:6px;
+    }
+
+    .week-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px; /* optional */
+    }
+
+    .calendar-switcher {
+        display: flex;
+        justify-content: center;
+    }
+
+    .view-btn {
+        display: inline-block;
+        background-color: white;
+        color: #54413A;
+        text-decoration: none;
+        border: 2px solid #54413A;
+        font-weight: bold;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .view-btn:hover {
+        background-color: #f5f0ed;
+    }
+
+    .view-btn.active {
+        background-color: #54413A;
+        color: white;
+    }
+
+</style>
+
+<h1>Event Calendar - {{ month_name }} {{ year }}</h1>
+
+<div class="calendar-switcher" style="text-align: center; margin-bottom: 20px;">
+    <a href="{% url 'calendar_view' %}" class="view-btn {% if request.resolver_match.url_name == 'calendar_view' %}active{% endif %}">Month</a>
+        <a href="{% url 'weekly_calendar' %}" class="view-btn {% if request.resolver_match.url_name == 'weekly_calendar' %}active{% endif %}">Week</a>
+</div>
+
+{% with week_data.0.0 as start_date %}
+    {% with week_data|last as last_item %}
+        {% with last_item.0 as end_date %}
+            <div class="month-header">
+                <a href="{{ prev_url }}" class="month-nav">←</a>
+                <span>
+                    {{ start_date|date:"F j" }}
+                    {% if start_date|date:"F" != end_date|date:"F" %}
+                        – {{ end_date|date:"F j, Y" }}
+                    {% else %}
+                        – {{ end_date|date:"j, Y" }}
+                    {% endif %}
+                </span>
+                <a href="{{ next_url }}" class="month-nav">→</a>
+            </div>
+        {% endwith %}
+    {% endwith %}
+{% endwith %}
+
+<div class="calendar-row">
+    {% for day, posts in week_data %}
+        <div class="day-column {% if day == today %}today{% endif %}">
+            <div class="day-header">{{ day|date:"l" }}</div>  <!-- "Tuesday" -->
+            <div class="day-number">{{ day.day }}</div>       <!-- "1" -->
+            {% for post in posts %}
+                <a href="{% url 'post_detail' post.id %}" class="event-box">{{ post.title }}</a>
+            {% empty %}
+                <p style="font-size: 0.8rem; color: #aaa; text-align:center;">No events</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
