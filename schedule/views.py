@@ -44,7 +44,9 @@ class NavigationCalendar(HTMLCalendar):
         return cal_html
     
     def formatweekheader(self):
-        return '<tr>' + ''.join(f'<th>{day}</th>' for day in calendar.day_name) + '</tr>'
+        day_names = list(calendar.day_name)
+        rotated = day_names[self.firstweekday:] + day_names[:self.firstweekday]
+        return '<tr>' + ''.join(f'<th>{day}</th>' for day in rotated) + '</tr>'
     
     def formatweek(self, theweek):
         return '<tr>' + ''.join(self.formatday(d, wd) for (d, wd) in theweek) + '</tr>'
