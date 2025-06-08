@@ -94,7 +94,7 @@ class EventCalendar(NavigationCalendar):
             return '<td></td>'
 
         css_class = self.cssclasses[weekday]
-        today = date.today()
+        today = timezone.localdate()
         if self.year == today.year and self.month == today.month and day == today.day:
             css_class += " today"
 
