@@ -59,7 +59,7 @@ class NavigationCalendar(HTMLCalendar):
     
 class EventCalendar(NavigationCalendar):
     def __init__(self, posts):
-        super().__init__()
+        super().__init__(firstweekday=6)
         self.events = self.group_by_day(posts)
 
     def group_by_day(self, posts):

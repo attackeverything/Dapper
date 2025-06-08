@@ -23,10 +23,13 @@ def home(request: HttpRequest):
     
 def upload(request):
     if request.method == 'POST':
+        title = request.POST.get('title')
         platform = request.POST.get('platform')
         #image = request.FILES.get('image')
         caption = request.POST.get('caption')
         raw_time = request.POST.get('scheduled_time')
+        print("Full POST data:", request.POST)
+        print(title)
 
         # Parse and make timezone-aware
         parsed_time = parse_datetime(raw_time)
@@ -39,13 +42,14 @@ def upload(request):
         with open(image_path, 'rb') as f:
             django_file = File(f, name='dapper-donkey.png')
             Post.objects.create(
+                title=title,
                 image=django_file,
                 content=caption,
                 scheduled_time=scheduled_time,
                 status='pending',
                 platform=platform
             )
-            return redirect('/submitted')
+            return render(request, 'submitted.html')
     return render(request, 'upload.html')
     
 def pending(request: HttpRequest):
@@ -85,3 +89,6 @@ def logout_view(request):
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'post_detail.html', {'post': post})
+
+def submitted(request):
+    return render(request, 'submitted.html')

@@ -140,4 +140,6 @@ CSRF_TRUSTED_ORIGINS = ['https://your-project-name.up.railway.app']
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+TIME_ZONE = 'America/Toronto'
+
 DEBUG=True
