@@ -13,7 +13,7 @@ from calendar import HTMLCalendar
 from django.shortcuts import render, redirect
 from .models import Event
 from .forms import EventForm
-from datetime import datetime
+from django.utils import timezone
 from home.models import Post
 from django.urls import reverse
 from datetime import timedelta
@@ -105,8 +105,9 @@ class EventCalendar(NavigationCalendar):
         return f'<td class="{css_class}"><div class="day-number">{day}</div>{posts_html}</td>'
 
 def calendar_view(request):
-    year = int(request.GET.get('year', datetime.today().year))
-    month = int(request.GET.get('month', datetime.today().month))
+    today = timezone.localdate()
+    year = int(request.GET.get('year', today.year))
+    month = int(request.GET.get('month', today.month))
 
     # Navigation logic
     prev_month = month - 1 if month > 1 else 12
@@ -132,7 +133,7 @@ def calendar_view(request):
 
 
 def weekly_calendar_view(request):
-    today = date.today()
+    today = timezone.localdate()
     year = int(request.GET.get('year', today.year))
     month = int(request.GET.get('month', today.month))
     day = int(request.GET.get('day', today.day))
