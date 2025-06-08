@@ -143,3 +143,5 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 TIME_ZONE = 'America/Toronto'
 
 USE_TZ = True 
+
+DEBUG = True
