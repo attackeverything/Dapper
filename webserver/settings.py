@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'workers',
     "verify_email.apps.VerifyEmailConfig",
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [

@@ -8,5 +8,6 @@ urlpatterns = [
     path('approve/<int:post_id>/', views.approve_post, name='approve_post'),
     path('reject/<int:post_id>/', views.reject_post, name='reject_post'),
     path('posts/<int:post_id>/', views.post_detail, name='post_detail'),
-    path('submitted/', views.submitted, name='submitted')
+    path('submitted/', views.submitted, name='submitted'),
+    path('accounts/', views.accounts, name='accounts')
 ]

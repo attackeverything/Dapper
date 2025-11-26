@@ -92,3 +92,6 @@ def post_detail(request, pk):
 
 def submitted(request):
     return render(request, 'submitted.html')
+
+def accounts(request):
+    return render(request, 'accounts.html')

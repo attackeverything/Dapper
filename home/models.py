@@ -8,3 +8,4 @@ class Post(models.Model):
     image = models.ImageField(upload_to='images/')
     scheduled_time = models.DateTimeField()
     status = models.CharField(max_length=10, choices=[('pending', 'Pending'), ('approved', 'Approved'), ('rejected', 'Rejected')])
+    posted = models.BooleanField(default=False)

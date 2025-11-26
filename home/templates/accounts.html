@@ -1,0 +1,144 @@
+{% extends "Webpage_Base.html" %}
+
+{% block title %}Upload Post{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+  <main class="content-container">
+    <!-- Header -->
+    <div class="header-row">
+      <h1>Upload New Social Media Post</h1>
+    </div>
+
+    <!-- Upload Form -->
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="title">Post Title:</label>
+        <input type="text" name="title" id="title" required>
+      </div>
+      <div class="form-group">
+        <label for="platform">Platform:</label>
+        <select name="platform" id="platform" required>
+          <option value="instagram">Instagram</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="image">Image:</label>
+        <input type="file" name="image" id="image" required>
+      </div>
+      <div class="form-group">
+        <label for="caption">Caption:</label>
+        <textarea name="caption" id="caption" rows="4" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="scheduled_time">Scheduled Time:</label>
+        <input type="datetime-local" name="scheduled_time" id="scheduled_time" required>
+      </div>
+      
+      <button type="submit" class="upload-button">Upload</button>
+    </form>
+  </main>
+</div>
+
+<script>
+  function previewImage(event) {
+    const input = event.target;
+    const preview = document.getElementById("preview");
+    const container = document.getElementById("imagePreview");
+
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+        container.classList.remove("hidden");
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script>
+
+<style>
+  .page-wrapper {
+    padding-top: 80px;
+    min-height: 100vh;
+    background-color: #fefcf8;
+  }
+  
+  .content-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header-row {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #54413A;
+  }
+  
+  .header-row h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #374151;
+  }
+  
+  input[type="file"],
+  input[type="datetime-local"],
+  select,
+  textarea, input[type="text"] {
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    background-color: #f9fafb;
+    color: #54413A;
+  }
+  
+  select:focus,
+  input[type="datetime-local"]:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #54413A;
+    box-shadow: 0 0 0 1px #54413A;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  .upload-button {
+    background-color: #54413A;
+    color: white;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .upload-button:hover {
+    background-color: #312825;
+  }
+  </style>
+{% endblock %}
