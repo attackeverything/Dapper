@@ -2,6 +2,7 @@ from django.utils import timezone
 from .models import Post
 from celery import shared_task
 import requests
+import os
 
 @shared_task
 def upload_due_posts():
@@ -18,8 +19,8 @@ def upload_due_posts():
 def upload_to_instagram(image, caption):
     import requests
 
-    IG_USER_ID = '17841475437671888'  # Replace with real IG Business ID
-    PAGE_ACCESS_TOKEN = 'EAARmDrjn3BkBO6Cl9EsskgLt2nUZBkaeRQvvcW5pMlFnpN6Bxa312AcZAPcwlYtCMcJlY7PcfZCqTgja59HpbumFJShPPgjzfjx3JFmibedwHlKupApzaZCqfFFa8crjFxZAHXRUkMOm9ygIO2u8tZAPdpU8wew9OgfAq9XyIqvhLrGeYS77QZBbsG7e7Qq0wqvM00BGb80HGDNLQEfWT8FVLZBh'     # Must be Page token, not user
+    IG_USER_ID = os.getenv("ADMIN_USERNAME")  # Replace with real IG Business ID
+    PAGE_ACCESS_TOKEN = os.getenv("PAGE_TOKEN")     # Must be Page token, not user
 
     # Valid 1:1 image that works
     image_url = 'https://fastly.picsum.photos/id/340/700/700.jpg?hmac=Y4i8C71JOBXjP4hcF_K01IYLqY3Ce8rrIi9JZz7Yv-o'
@@ -38,7 +39,7 @@ def upload_to_instagram(image, caption):
     response = requests.post(create_url, data=payload)
     data = response.json()
     container_id = data.get("id")
-    publish_to_instagram(container_id, 'EAARmDrjn3BkBO6Cl9EsskgLt2nUZBkaeRQvvcW5pMlFnpN6Bxa312AcZAPcwlYtCMcJlY7PcfZCqTgja59HpbumFJShPPgjzfjx3JFmibedwHlKupApzaZCqfFFa8crjFxZAHXRUkMOm9ygIO2u8tZAPdpU8wew9OgfAq9XyIqvhLrGeYS77QZBbsG7e7Qq0wqvM00BGb80HGDNLQEfWT8FVLZBh')
+    publish_to_instagram(container_id, PAGE_ACCESS_TOKEN)
 
 def publish_to_instagram(container_id, access_token):
     publish_url = f"https://graph.facebook.com/v19.0/17841475437671888/media_publish"
